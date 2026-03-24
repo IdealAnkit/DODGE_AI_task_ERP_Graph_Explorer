@@ -2,14 +2,18 @@ require('dotenv').config();
 const { Pool } = require('pg');
 const logger = require('../utils/logger');
 
-const connectionString = process.env.DATABASE_URL || '';
+let connectionString = process.env.DATABASE_URL || '';
 const isSupabase = connectionString.includes('supabase');
+
+if (isSupabase && connectionString.includes('6543') && !connectionString.includes('pgbouncer=true')) {
+  connectionString += (connectionString.includes('?') ? '&' : '?') + 'pgbouncer=true';
+}
 
 const pool = new Pool({
   connectionString,
   ssl: isSupabase ? { rejectUnauthorized: false } : false,
-  idleTimeoutMillis: 1000, // Instantly close idle connections so they don't go stale
-  connectionTimeoutMillis: 15000, // Fast fail on frozen networks
+  idleTimeoutMillis: 30000, // Keep connections alive a bit longer to prevent rapid connection blocks
+  connectionTimeoutMillis: 30000, // 30s timeout
 });
 
 pool.on('error', (err) => {
