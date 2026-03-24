@@ -3,17 +3,21 @@ const { Pool } = require('pg');
 const logger = require('../utils/logger');
 
 let connectionString = process.env.DATABASE_URL || '';
-const isSupabase = connectionString.includes('supabase');
 
-if (isSupabase && connectionString.includes('6543') && !connectionString.includes('pgbouncer=true')) {
-  connectionString += (connectionString.includes('?') ? '&' : '?') + 'pgbouncer=true';
+// Force parameters natively in the URL to bypass pg-pool handshake bugs
+if (connectionString && !connectionString.includes('sslmode=require')) {
+  connectionString += (connectionString.includes('?') ? '&' : '?') + 'sslmode=require';
+}
+if (connectionString && connectionString.includes('pooler.supabase.com') && !connectionString.includes('pgbouncer=true')) {
+  connectionString += '&pgbouncer=true';
 }
 
 const pool = new Pool({
   connectionString,
-  ssl: isSupabase ? { rejectUnauthorized: false } : false,
-  idleTimeoutMillis: 30000, // Keep connections alive a bit longer to prevent rapid connection blocks
-  connectionTimeoutMillis: 30000, // 30s timeout
+  ssl: { rejectUnauthorized: false },
+  max: 5, // Keep max low to prevent PgBouncer exhaustion
+  idleTimeoutMillis: 5000,
+  connectionTimeoutMillis: 10000,
 });
 
 pool.on('error', (err) => {
