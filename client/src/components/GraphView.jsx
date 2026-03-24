@@ -292,10 +292,25 @@ function GraphOverlay({ graph, highlightedNodes, theme, toggleTheme }) {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 export default function GraphView({ graph, loading, error, onRetry, onNodeClick, highlightedNodes, onClearHighlights, theme, toggleTheme }) {
+  const [slowLoad, setSlowLoad] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (loading) {
+      timer = setTimeout(() => setSlowLoad(true), 4000);
+    } else {
+      setSlowLoad(false);
+    }
+    return () => clearTimeout(timer);
+  }, [loading]);
+
   if (loading) return (
     <div className="graph-loading">
       <div className="spinner" />
-      <p style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>Loading ERP graph...</p>
+      <div style={{ color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center', maxWidth: '300px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <span>Loading ERP graph...</span>
+        {slowLoad && <span style={{ color: 'var(--accent)', fontSize: '11px', opacity: 0.8 }}>(Waking up Render backend. This takes ~50s on the free tier)</span>}
+      </div>
     </div>
   );
   if (error) return (
