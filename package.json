@@ -1,0 +1,14 @@
+{
+  "name": "erp-graph-system",
+  "version": "1.0.0",
+  "description": "ERP Graph + LLM Query System",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "ingest": "cd server && npm run ingest"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
