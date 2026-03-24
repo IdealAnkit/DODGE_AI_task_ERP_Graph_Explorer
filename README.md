@@ -168,22 +168,23 @@ In real-world enterprise systems, data is scattered across dozens of tables — 
 
 ## ✨ Features
 
-<div align="center">
-
+### 🏢 Core Requirements Completed
 | Feature | Description |
 | :-----: | :---------- |
-| 🗺️ | **Interactive Graph** — React Flow canvas, 7 custom node types, zoom slider, arrow-pad navigation, minimap |
-| 💬 | **Natural Language Queries** — Ask questions in plain English, get data-backed structured answers |
-| 📡 | **Streaming Responses** — Token-by-token SSE streaming with live blinking `▌` cursor |
-| 🧠 | **Conversation Memory** — Last 8 turns sent as context enabling smart follow-up queries |
-| 🔍 | **Click-to-Explore Nodes** — Click any node to dim unrelated nodes and focus on its neighborhood |
-| ✨ | **LLM Node Highlighting** — Query results auto-pan and highlight matching graph nodes |
-| 🛡️ | **3-Layer Guardrails** — Keyword pre-filter + LLM domain rejection + SQL sanitization |
-| 🔎 | **SQL Transparency** — Every answer shows the generated SQL query in a collapsible block |
-| 📊 | **Data Tables** — Raw query results shown in a scrollable tabular view |
-| 🔗 | **O2C Trace** — Trace a complete Order-to-Cash chain for any billing document |
-| ⚠️ | **Broken Flow Detection** — Finds delivered-but-not-billed and other incomplete flows |
-| 🗑️ | **Clear Chat** — Reset conversation history with one click |
+| 🗺️ | **Interactive Graph** — React Flow canvas with 7 node types and 5 edge types representing the O2C flow |
+| 💬 | **Natural Language Queries** — Ask questions in plain English without knowing SQL |
+| 🛡️ | **Query Guardrails** — Strict domain filtering rejects any non-ERP queries |
+| 🔎 | **SQL Transparency** — Every response displays the generated PostgreSQL query |
+
+### 🌟 Extra / Bonus Implementations (Beyond Assessment Scope)
+| Feature | Description |
+| :-----: | :---------- |
+| 🎨 | **Rich Node Representation** — Nodes are not just simple dots. They have specific names, tags (e.g., `isBlocked`, `clearingDate`), custom colors, and distinct icons for all 7 entity types |
+| 🎮 | **Advanced Graph Controls** — Built-in custom zoom slider, D-pad panning navigation, and a minimap for exploring large datasets easily |
+| 🧠 | **Conversational Memory** — The chat is not single-prompt dependent! Context is retained across multiple turns, allowing for natural follow-up questions |
+| 🔄 | **Full NL Pipeline** — The response is not just a raw SQL table. The pipeline goes: `NL → SQL → Database Execution → LLM Context → Natural Language Answer` |
+| ✨ | **Click-to-Highlight** — Clicking any node instantly dims the rest of the graph and highlights all its directly connected neighbors |
+| 📡 | **Streaming Responses** — Token-by-token SSE streaming provides a ChatGPT-like real-time typing experience |
 
 </div>
 
