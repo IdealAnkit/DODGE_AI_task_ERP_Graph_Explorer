@@ -158,7 +158,7 @@ function GraphInnerControls({ highlightedNodes, onClearHighlights, focusedNodeId
 }
 
 // ── Graph Canvas ──────────────────────────────────────────────────────────────
-function GraphCanvas({ rawNodes, rawEdges, onNodeClick, highlightedNodes, onClearHighlights }) {
+function GraphCanvas({ rawNodes, rawEdges, onNodeClick, highlightedNodes, onClearHighlights, theme }) {
   const [focusedNodeId, setFocusedNodeId] = useState(null);
 
   const baseNodes = useMemo(() => layoutNodes(rawNodes), [rawNodes]);
@@ -225,12 +225,12 @@ function GraphCanvas({ rawNodes, rawEdges, onNodeClick, highlightedNodes, onClea
       panOnDrag
       onPaneClick={() => setFocusedNodeId(null)}
     >
-      <Background color="#1a1f27" gap={24} size={1} />
+      <Background color={theme === 'dark' ? '#1a1f27' : '#e2e8f0'} gap={24} size={1} />
       <MiniMap
         nodeColor={n => NODE_CONFIG[n.data?.nodeType]?.color || '#555'}
         nodeStrokeWidth={2}
         pannable zoomable
-        maskColor="rgba(10,13,18,0.75)"
+        maskColor={theme === 'dark' ? 'rgba(10,13,18,0.75)' : 'rgba(240,244,248,0.6)'}
         style={{ width: 160, height: 100 }}
       />
       <GraphInnerControls
@@ -244,7 +244,7 @@ function GraphCanvas({ rawNodes, rawEdges, onNodeClick, highlightedNodes, onClea
 }
 
 // ── Overlay (header + legend) ─────────────────────────────────────────────────
-function GraphOverlay({ graph, highlightedNodes }) {
+function GraphOverlay({ graph, highlightedNodes, theme, toggleTheme }) {
   const typeCounts = useMemo(() =>
     (graph.nodes || []).reduce((a, n) => { a[n.type] = (a[n.type] || 0) + 1; return a; }, {}),
     [graph.nodes]
@@ -258,6 +258,16 @@ function GraphOverlay({ graph, highlightedNodes }) {
         </div>
         <div className="app-badge">⬡ React Flow</div>
         <div className="app-badge" style={{ borderColor: 'rgba(63,185,80,0.4)', color: '#3fb950' }}>✦ Gemini AI</div>
+        
+        <div className="theme-toggle-container" style={{ marginLeft: 'auto', pointerEvents: 'auto' }}>
+          <button 
+            className="theme-toggle" 
+            onClick={toggleTheme} 
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+        </div>
       </div>
       <div className="graph-controls">
         <div className="graph-stats">
@@ -281,7 +291,7 @@ function GraphOverlay({ graph, highlightedNodes }) {
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
-export default function GraphView({ graph, loading, error, onRetry, onNodeClick, highlightedNodes, onClearHighlights }) {
+export default function GraphView({ graph, loading, error, onRetry, onNodeClick, highlightedNodes, onClearHighlights, theme, toggleTheme }) {
   if (loading) return (
     <div className="graph-loading">
       <div className="spinner" />
@@ -297,7 +307,7 @@ export default function GraphView({ graph, loading, error, onRetry, onNodeClick,
 
   return (
     <>
-      <GraphOverlay graph={graph} highlightedNodes={highlightedNodes} />
+      <GraphOverlay graph={graph} highlightedNodes={highlightedNodes} theme={theme} toggleTheme={toggleTheme} />
       <div style={{ position: 'absolute', inset: 0 }}>
         <ReactFlowProvider>
           <GraphCanvas
@@ -306,6 +316,7 @@ export default function GraphView({ graph, loading, error, onRetry, onNodeClick,
             onNodeClick={onNodeClick}
             highlightedNodes={highlightedNodes}
             onClearHighlights={onClearHighlights}
+            theme={theme}
           />
         </ReactFlowProvider>
       </div>

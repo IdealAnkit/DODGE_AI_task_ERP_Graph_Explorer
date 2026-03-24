@@ -14,6 +14,13 @@ export default function App() {
   const [detailData, setDetailData] = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
 
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   useEffect(() => { fetchGraph(200); }, [fetchGraph]);
 
   // Set highlights — no auto-clear timer; user clears manually
@@ -61,6 +68,8 @@ export default function App() {
           onNodeClick={handleNodeClick}
           highlightedNodes={highlightedNodes}
           onClearHighlights={handleClearHighlights}
+          theme={theme}
+          toggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
         />
       </div>
 

@@ -32,6 +32,35 @@
   --radius-lg: 12px;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --header-grad: linear-gradient(to bottom, rgba(13,17,23,0.95) 0%, rgba(13,17,23,0) 100%);
+}
+
+/* ── Light Theme Override ──────────────────────── */
+[data-theme="light"] {
+  --bg-primary: #f0f4f8;      /* Soft, premium, eye-soothing steel/slate */
+  --bg-secondary: #ffffff;    /* Crisp white panels */
+  --bg-tertiary: #e2e8f0;     /* Soft borders/hover areas */
+  --bg-card: #ffffff;
+  --border: #cbd5e1;
+  --border-light: #94a3b8;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --header-grad: linear-gradient(to bottom, rgba(240,244,248,0.95) 0%, rgba(240,244,248,0) 100%);
+
+  /* Slightly darken some node colors for better contrast on light mode */
+  --node-customer: #0b7a85;
+  --node-so: #1557c0;
+  --node-delivery: #1b6a2a;
+  --node-billing: #b37a09;
 }
 
 /* ── Reset ─────────────────────────────────────── */
@@ -87,7 +116,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(to bottom, rgba(13,17,23,0.95) 0%, rgba(13,17,23,0) 100%);
+  background: var(--header-grad);
   pointer-events: none;
 }
 
@@ -114,6 +143,41 @@ body {
   font-size: 11px;
   color: var(--accent);
   font-weight: 500;
+}
+
+.theme-toggle-container {
+  pointer-events: auto;
+}
+
+.theme-toggle {
+  background: rgba(30,35,40,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background: rgba(50,55,60,0.8);
+  border-color: rgba(255,255,255,0.3);
+}
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+  background: rgba(255,255,255,1);
+  border-color: rgba(0,0,0,0.2);
 }
 
 /* ── Inner Graph Controls (zoom + arrow pad) ────────── */
