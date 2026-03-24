@@ -121,12 +121,12 @@ function GraphInnerControls({ highlightedNodes, onClearHighlights, focusedNodeId
   return (
     <div className="graph-inner-controls">
       <div className="zoom-controls">
-        <button className="ctrl-btn" onClick={() => zoomIn({ duration: 200 })} title="Zoom In">＋</button>
+        <button className="ctrl-btn" onClick={() => zoomOut({ duration: 200 })} title="Zoom Out">－</button>
         <input type="range" min="0.05" max="4" step="0.05" value={zoom}
           onInput={e => { const v = parseFloat(e.target.value); setZoom(v); setZoomDisplay(v); }}
           onChange={e => { const v = parseFloat(e.target.value); setZoom(v); setZoomDisplay(v); }}
           className="zoom-slider" />
-        <button className="ctrl-btn" onClick={() => zoomOut({ duration: 200 })} title="Zoom Out">－</button>
+        <button className="ctrl-btn" onClick={() => zoomIn({ duration: 200 })} title="Zoom In">＋</button>
         <span className="zoom-label">{Math.round(zoom * 100)}%</span>
         <button className="ctrl-btn fit-btn" onClick={() => fitView({ duration: 500, padding: 0.1 })} title="Fit all">⛶</button>
       </div>
