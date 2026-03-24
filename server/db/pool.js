@@ -4,12 +4,8 @@ const logger = require('../utils/logger');
 
 let connectionString = process.env.DATABASE_URL || '';
 
-// Force parameters natively in the URL to bypass pg-pool handshake bugs
-if (connectionString && !connectionString.includes('sslmode=require')) {
-  connectionString += (connectionString.includes('?') ? '&' : '?') + 'sslmode=require';
-}
 if (connectionString && connectionString.includes('pooler.supabase.com') && !connectionString.includes('pgbouncer=true')) {
-  connectionString += '&pgbouncer=true';
+  connectionString += (connectionString.includes('?') ? '&' : '?') + 'pgbouncer=true';
 }
 
 const pool = new Pool({
