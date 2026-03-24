@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const logger = require('../utils/logger');
 
 const connectionString = process.env.DATABASE_URL || '';
-const isSupabase = connectionString.includes('supabase.co');
+const isSupabase = connectionString.includes('supabase');
 
 const pool = new Pool({
   connectionString,
