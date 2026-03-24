@@ -8,6 +8,8 @@ const isSupabase = connectionString.includes('supabase');
 const pool = new Pool({
   connectionString,
   ssl: isSupabase ? { rejectUnauthorized: false } : false,
+  idleTimeoutMillis: 1000, // Instantly close idle connections so they don't go stale
+  connectionTimeoutMillis: 15000, // Fast fail on frozen networks
 });
 
 pool.on('error', (err) => {
