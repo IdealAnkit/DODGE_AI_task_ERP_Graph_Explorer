@@ -31,8 +31,8 @@ export function useChat() {
     setMessages(prev => [...prev, assistantMsg]);
 
     try {
-      // Hit the SSE streaming endpoint
-      const response = await fetch('/query/stream', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE}/query/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
