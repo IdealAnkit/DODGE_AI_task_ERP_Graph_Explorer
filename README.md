@@ -13,6 +13,11 @@
 
 <br/>
 
+### 🌐 **Live Demo:** [https://dodge-ai-task-erp-graph-explorer.vercel.app](https://dodge-ai-task-erp-graph-explorer.vercel.app)
+*Backend deployed on Render with Render Internal PostgreSQL for robust network reliability.*
+
+<br/>
+
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Graph Nodes](https://img.shields.io/badge/Graph_Nodes-580+-blue?style=flat-square)](#-graph-architecture)
 [![Node Types](https://img.shields.io/badge/Node_Types-7-purple?style=flat-square)](#-graph-architecture)
