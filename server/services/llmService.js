@@ -173,7 +173,7 @@ async function processQuery(userQuery, conversationHistory = []) {
   }
 
   const model = genAI.getGenerativeModel(
-    { model: 'gemini-1.5-flash-latest' },
+    { model: 'gemini-2.5-flash' },
     PREVIEW_REQUEST_OPTIONS
   );
 
@@ -250,7 +250,7 @@ async function processQueryStream(userQuery, conversationHistory = [], onChunk) 
   }
 
   const model = genAI.getGenerativeModel(
-    { model: 'gemini-1.5-flash-latest' },
+    { model: 'gemini-2.5-flash' },
     PREVIEW_REQUEST_OPTIONS
   );
 
